@@ -125,7 +125,7 @@ TERM
   jump_cd() {
     CURR=$(print_bookmark "$1" 2>/dev/null)
     if [[ -n $CURR ]] && [[ -n $1 ]]; then
-      cd $CURR
+      cd "$CURR"
     else
       print_help
       return 1
