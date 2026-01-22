@@ -44,6 +44,9 @@ _j_complete()
 }
 
 j() {
+
+  [[ -z "$(jq --version)" ]] && return 1
+
   if [[ ! -f ~/.jump_bookmarks.json ]] || [[ -z "$(jq . ~/.jump_bookmarks.json)" ]] ; then
     jq -n '{"bookmarks":{}}' > ~/.jump_bookmarks.json
   fi
@@ -58,6 +61,7 @@ Usage: jump [options] [BOOKMARK[/some/subpath]]
     -h Show this message
 TERM
   }
+
 
   save_bookmark() {
     if [[ -n "$1" ]] && [[ -d "$2" ]] ; then
