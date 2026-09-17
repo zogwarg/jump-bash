@@ -23,6 +23,10 @@
 
 _j_complete()
 {
+  # Exit early if jq is broken
+  [[ -z "$(jq --version)" ]] && return 1
+  jq -n empty || return 1
+
   local cur prev opts
   COMPREPLY=()
   cur="${COMP_WORDS[COMP_CWORD]}"
@@ -44,8 +48,9 @@ _j_complete()
 }
 
 j() {
-
+  # Exit early if jq is broken
   [[ -z "$(jq --version)" ]] && return 1
+  jq -n empty || return 1
 
   if [[ ! -f ~/.jump_bookmarks.json ]] || [[ -z "$(jq . ~/.jump_bookmarks.json)" ]] ; then
     jq -n '{"bookmarks":{}}' > ~/.jump_bookmarks.json
